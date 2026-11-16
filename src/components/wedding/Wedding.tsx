@@ -32,8 +32,8 @@ function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const templeY = useTransform(scrollYProgress, [0, 1], ["60%", "0%"]);
-  const templeScale = useTransform(scrollYProgress, [0, 1], [1, 1.6]);
+  const templeY = useTransform(scrollYProgress, [0, 1], ["42%", "0%"]);
+  const templeScale = useTransform(scrollYProgress, [0, 1], [1, 1.35]);
   const treeY = useTransform(scrollYProgress, [0, 1], ["15%", "0%"]);
   const treeScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-55%"]);

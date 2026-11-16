@@ -250,7 +250,7 @@ a:focus-visible {
 }
 .hero-scene {
   position: relative;
-  height: calc(var(--visible-viewport) + 100svh);
+  height: calc(var(--visible-viewport) + 45svh);
   background: oklch(0.63 0.17 257);
 }
 .hero-sticky {
@@ -1338,5 +1338,32 @@ a:focus-visible {
   .location-button {
     font-size: 14px;
     padding: 12px 20px;
+  }
+}
+
+/* Explicit depth order: the tower passes in front of the invitation names. */
+.hero-sticky {
+  isolation: isolate;
+}
+.hero-sky {
+  z-index: 0;
+}
+.hero-names {
+  z-index: 1;
+}
+.hero-temple {
+  z-index: 2;
+  height: 105%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+.hero-tree {
+  z-index: 3;
+}
+/* Fill tall phone viewports with the artwork; the couple stays inside the
+   central safe area while decorative side columns can extend beyond the edge. */
+@media (max-width: 760px) and (max-aspect-ratio: 3/4) {
+  .couple-art-box {
+    width: min(160cqw, max(100%, calc(var(--visible-viewport) * 0.6135)));
   }
 }
