@@ -801,22 +801,71 @@ a:focus-visible {
   margin-top: 30cqw;
 }
 .music-control {
+  --music-inset: clamp(12px, 3vw, 24px);
   position: fixed;
   z-index: 40;
-  bottom: 24px;
-  left: 24px;
-  width: 56px;
-  height: 56px;
+  bottom: max(var(--music-inset), env(safe-area-inset-bottom));
+  left: max(var(--music-inset), env(safe-area-inset-left));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 6px 16px 6px 6px;
+  border: 1px solid var(--invitation-gold);
+  border-radius: 999px;
+  background: linear-gradient(125deg, #692435, #361019);
+  color: #fff6e5;
+  box-shadow: 0 4px 18px #2d101956;
+  text-align: left;
+}
+.music-control:hover {
+  background: linear-gradient(125deg, #7c3043, #461820);
+}
+.music-control:focus-visible {
+  outline-color: #fff1c2;
+  box-shadow: 0 0 0 5px #361019;
+}
+.music-control-icon {
+  position: relative;
   display: grid;
   place-items: center;
+  flex: 0 0 40px;
+  height: 40px;
+  border: 1px solid #ffdf9f;
   border-radius: 50%;
-  background: oklch(0.74 0.075 85);
-  color: var(--invitation-white);
-  box-shadow: 0 4px 15px oklch(0.25 0.03 30 / 0.15);
+  background: linear-gradient(145deg, #ffe7ad, #d5a353);
+  color: #4c1b27;
 }
-.music-control svg {
-  width: 22px;
-  height: 22px;
+.music-control-sparkle {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+.music-control-label {
+  min-width: 54px;
+  font:
+    500 14px/1.15 "Jost",
+    sans-serif;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .music-control[data-intro="true"] .music-control-icon::after {
+    position: absolute;
+    inset: -1px;
+    border: 1px solid #ffe7ad;
+    border-radius: inherit;
+    content: "";
+    animation: music-invitation-pulse 1.6s ease-out 0.5s both;
+  }
+}
+@keyframes music-invitation-pulse {
+  from {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.32);
+  }
 }
 @media (max-width: 600px) {
   .hero-names {
@@ -982,12 +1031,6 @@ a:focus-visible {
   }
   .finale-map small {
     font-size: 2.6cqw;
-  }
-  .music-control {
-    width: 44px;
-    height: 44px;
-    left: 16px;
-    bottom: 16px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

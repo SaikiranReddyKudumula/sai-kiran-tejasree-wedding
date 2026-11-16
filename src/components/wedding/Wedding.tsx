@@ -4,8 +4,10 @@ import {
   ArrowLeft,
   ArrowRight,
   MapPin,
+  Music2,
   Play,
   Pause,
+  Sparkles,
   MessageCircle,
   CalendarDays,
   Clock3,
@@ -445,48 +447,68 @@ function Finale() {
     </section>
   );
 }
-export function WeddingSite() {
+function WeddingMusic() {
   const [playing, setPlaying] = useState(false);
+  const [hasPlayed, setHasPlayed] = useState(false);
   const audio = useRef<HTMLAudioElement>(null);
+
   useEffect(() => {
     const track = audio.current;
-    if (!track || !wedding.audioAutoplay) return;
+    if (!track) return;
     track.volume = wedding.audioVolume;
-    const removeFallback = () => {
-      document.removeEventListener("pointerup", startOnInteraction);
-      document.removeEventListener("keydown", startOnInteraction);
-    };
-    const startOnInteraction = (event: Event) => {
-      // The music button handles its own gesture, avoiding a play/pause race.
-      if (event.target instanceof Element && event.target.closest(".music-control")) return;
+    if (wedding.audioAutoplay) {
+      // If the browser blocks audible autoplay, guests can start it with the button.
       void track.play().catch(() => {});
-    };
-    track.addEventListener("playing", removeFallback);
-    document.addEventListener("pointerup", startOnInteraction);
-    document.addEventListener("keydown", startOnInteraction);
-    // Audible autoplay is browser-controlled. Retry on a gesture if it is blocked.
-    void track.play().catch(() => {});
-    return () => {
-      removeFallback();
-      track.removeEventListener("playing", removeFallback);
-    };
+    }
   }, []);
+
   const toggle = () => {
     const track = audio.current;
     if (!track) return;
-    if (track.paused) {
-      track.volume = wedding.audioVolume;
-      track
-        .play()
-        .then(() => setPlaying(true))
-        .catch(() => setPlaying(false));
-    } else {
+    if (playing) {
       track.pause();
-      setPlaying(false);
+    } else {
+      track.volume = wedding.audioVolume;
+      // Keep play() inside the click so browsers count it as a user gesture.
+      void track.play().catch(() => {});
     }
   };
+
+  return (
+    <>
+      <audio
+        ref={audio}
+        src={wedding.audioSrc}
+        loop
+        preload="metadata"
+        onPlaying={() => {
+          setPlaying(true);
+          setHasPlayed(true);
+        }}
+        onPause={() => setPlaying(false)}
+        onError={() => setPlaying(false)}
+      />
+      <button
+        type="button"
+        className="music-control"
+        data-intro={!hasPlayed}
+        onClick={toggle}
+        aria-label={playing ? "Pause wedding music" : "Sound on: play wedding music"}
+      >
+        <span className="music-control-icon" aria-hidden="true">
+          {playing ? <Pause size={17} fill="currentColor" /> : <Music2 size={19} />}
+          {!hasPlayed && <Sparkles size={12} className="music-control-sparkle" />}
+        </span>
+        <span className="music-control-label">{playing ? "Pause" : "Sound on"}</span>
+      </button>
+    </>
+  );
+}
+
+export function WeddingSite() {
   return (
     <main className="invitation-site">
+      {wedding.audioSrc && <WeddingMusic />}
       <Hero />
       <Invitation />
       <Events />
@@ -494,27 +516,6 @@ export function WeddingSite() {
       <Story />
       <Closing />
       <Finale />
-      {wedding.audioSrc && (
-        <>
-          <audio
-            src={wedding.audioSrc}
-            ref={audio}
-            loop
-            autoPlay={wedding.audioAutoplay}
-            preload="auto"
-            onPlay={() => setPlaying(true)}
-            onPause={() => setPlaying(false)}
-          />
-          <button
-            onClick={toggle}
-            className="music-control"
-            aria-label={playing ? "Pause music" : "Play music"}
-            title={playing ? "Pause music" : "Play music"}
-          >
-            {playing ? <Pause /> : <Play fill="currentColor" />}
-          </button>
-        </>
-      )}
     </main>
   );
 }
