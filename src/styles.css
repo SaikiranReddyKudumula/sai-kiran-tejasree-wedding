@@ -987,7 +987,9 @@ a:focus-visible {
   *::after {
     scroll-behavior: auto !important;
   }
-  .hero-scene { height: 100svh; }
+  .hero-scene {
+    height: 100svh;
+  }
   .hero-temple {
     bottom: -45%;
   }
@@ -1195,35 +1197,26 @@ a:focus-visible {
   }
 }
 
-/* One viewport-sized sticky stage keeps its release aligned with end/end progress.
-   The original transparent art is 1872 × 3344; its tower begins 293px down. */
+/* Preserve the reference's full-width portrait composition. On wide screens,
+   scroll through the tall canvas before pinning its bottom for the final zoom. */
 .couple-scene {
-  --scene-height: 100svh;
+  --scene-height: max(100svh, 163cqw);
   position: relative;
-  height: calc(var(--scene-height) + 50svh);
+  height: calc(var(--scene-height) + 35svh);
   background: var(--invitation-ink);
 }
 .couple-sticky {
   position: sticky;
-  top: 0;
+  top: calc(100svh - var(--scene-height));
   height: var(--scene-height);
   overflow: hidden;
   isolation: isolate;
 }
-.couple-sticky::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 22%;
-  background: linear-gradient(to bottom, transparent, oklch(0.7 0.06 75) 80%);
-  z-index: 0;
-  pointer-events: none;
-}
 .couple-art-box {
   position: absolute;
-  bottom: -1px;
+  bottom: -12cqw;
   left: 50%;
-  width: min(100%, 61.35svh);
+  width: 100%;
   aspect-ratio: 1872 / 3344;
   transform: translateX(-50%);
   z-index: 1;
@@ -1231,5 +1224,9 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .couple-scene {
     height: var(--scene-height);
+  }
+  .couple-sticky {
+    position: relative;
+    top: 0;
   }
 }

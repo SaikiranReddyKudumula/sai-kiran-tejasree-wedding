@@ -182,8 +182,8 @@ function TempleScene() {
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const skyScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const templeScale = useTransform(scrollYProgress, [0, 1], [1, 1.04]);
-  const coupleScale = useTransform(scrollYProgress, [0, 1], [1, 1.04]);
+  const templeScale = useTransform(scrollYProgress, [0, 1], [1, 1.01]);
+  const coupleScale = useTransform(scrollYProgress, [0, 0.65, 1], [0.58, 0.65, 0.68]);
   const leftCloudX = useTransform(scrollYProgress, [0, 1], ["-25vw", "100vw"]);
   const rightCloudX = useTransform(scrollYProgress, [0, 1], ["-70vw", "55vw"]);
   return (
@@ -221,7 +221,7 @@ function TempleScene() {
             src={art.bride.url}
             alt="Bride and groom exchanging garlands"
             loading="lazy"
-            style={reduce ? { scale: 1 } : { scale: coupleScale }}
+            style={reduce ? { scale: 0.68, y: "-15%" } : { scale: coupleScale, y: "-15%" }}
           />
         </div>
       </div>
