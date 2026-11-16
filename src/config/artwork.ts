@@ -18,7 +18,6 @@ import social1 from "@/assets/original/z4FcDC07DapVhAf2xKtlQGU.jpg.asset.json";
 import social2 from "@/assets/original/rOJVGWe8W5Nx4kfOdvTCIYo3N30.jpg.asset.json";
 import social3 from "@/assets/original/sZJ4c6HdPUPslpxpmOqUaERrJtA.jpg.asset.json";
 import preview from "@/assets/original/zBRd2fZShor1nxxKvdVKhKU.webp.asset.json";
-import audio from "@/assets/original/mjZh3ISr0YDK01kdBZisCq18TDo.mp3.asset.json";
 
 // Keep source metadata and original names; serve the actual files in every environment.
 const local = <T extends { original_filename: string; url: string }>(asset: T): T => ({
@@ -48,7 +47,7 @@ export const artwork = {
   story: local(story),
   instagram: local(instagram),
   preview: local(preview),
-  audio: local(audio),
+  audio: extra("music-60e88b49.mp3"),
   ganesha: extra("7Jc7F5U6LjAzdX4ypVkjja74nO8.webp"),
   photoFrame: extra("a6l8leK3Q1bKzvdCCwf3nSzy7E.png"),
   rsvp: extra("6f9AxarIs54UBYT1Lrm4ws9V764.webp"),

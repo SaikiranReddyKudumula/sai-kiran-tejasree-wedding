@@ -30,7 +30,7 @@ export const wedding = {
     telugu: "శ్రీ కుడుముల కృష్ణారెడ్డి – వెంకట రమణ",
   },
   brideFamily: {
-    english: "Sri Bando Dharma Reddy & Smt. Vanaja",
+    english: "Sri Banda Dharma Reddy & Smt. Vanaja",
     hometown: "Medipally Village, Medipally Mandal, Medchal District, Telangana",
   },
   // Set to the family's WhatsApp number (country code, digits only), e.g. "919876543210". Empty hides the button.
@@ -38,6 +38,7 @@ export const wedding = {
   // Path to a licensed instrumental track, e.g. "/assets/audio/wedding.mp3". Empty hides the music button.
   audioSrc: artwork.audio.url,
   audioVolume: 0.6,
+  audioAutoplay: true,
   artwork,
   invitationDetails: {
     title: "Wedding Day",

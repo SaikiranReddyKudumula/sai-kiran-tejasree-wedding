@@ -448,6 +448,29 @@ function Finale() {
 export function WeddingSite() {
   const [playing, setPlaying] = useState(false);
   const audio = useRef<HTMLAudioElement>(null);
+  useEffect(() => {
+    const track = audio.current;
+    if (!track || !wedding.audioAutoplay) return;
+    track.volume = wedding.audioVolume;
+    const removeFallback = () => {
+      document.removeEventListener("pointerup", startOnInteraction);
+      document.removeEventListener("keydown", startOnInteraction);
+    };
+    const startOnInteraction = (event: Event) => {
+      // The music button handles its own gesture, avoiding a play/pause race.
+      if (event.target instanceof Element && event.target.closest(".music-control")) return;
+      void track.play().catch(() => {});
+    };
+    track.addEventListener("playing", removeFallback);
+    document.addEventListener("pointerup", startOnInteraction);
+    document.addEventListener("keydown", startOnInteraction);
+    // Audible autoplay is browser-controlled. Retry on a gesture if it is blocked.
+    void track.play().catch(() => {});
+    return () => {
+      removeFallback();
+      track.removeEventListener("playing", removeFallback);
+    };
+  }, []);
   const toggle = () => {
     const track = audio.current;
     if (!track) return;
@@ -477,7 +500,9 @@ export function WeddingSite() {
             src={wedding.audioSrc}
             ref={audio}
             loop
-            preload="none"
+            autoPlay={wedding.audioAutoplay}
+            preload="auto"
+            onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
           />
           <button
