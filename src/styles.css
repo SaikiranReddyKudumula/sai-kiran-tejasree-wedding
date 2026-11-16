@@ -239,15 +239,24 @@ a:focus-visible {
   color: var(--invitation-ink);
   container-type: inline-size;
 }
+/* Dynamic viewport follows Safari's collapsing toolbar; scroll runway stays stable. */
+.invitation-site {
+  --visible-viewport: 100vh;
+}
+@supports (height: 100dvh) {
+  .invitation-site {
+    --visible-viewport: 100dvh;
+  }
+}
 .hero-scene {
   position: relative;
-  height: 200svh;
+  height: calc(var(--visible-viewport) + 100svh);
   background: oklch(0.63 0.17 257);
 }
 .hero-sticky {
   position: sticky;
   top: 0;
-  height: 100svh;
+  height: var(--visible-viewport);
   overflow: hidden;
 }
 .hero-sky {
@@ -988,7 +997,7 @@ a:focus-visible {
     scroll-behavior: auto !important;
   }
   .hero-scene {
-    height: 100svh;
+    height: var(--visible-viewport);
   }
   .hero-temple {
     bottom: -45%;
@@ -1200,14 +1209,14 @@ a:focus-visible {
 /* Preserve the reference's full-width portrait composition. On wide screens,
    scroll through the tall canvas before pinning its bottom for the final zoom. */
 .couple-scene {
-  --scene-height: max(100svh, 163cqw);
+  --scene-height: max(var(--visible-viewport), 163cqw);
   position: relative;
   height: calc(var(--scene-height) + 35svh);
   background: var(--invitation-ink);
 }
 .couple-sticky {
   position: sticky;
-  top: calc(100svh - var(--scene-height));
+  top: calc(var(--visible-viewport) - var(--scene-height));
   height: var(--scene-height);
   overflow: hidden;
   isolation: isolate;
