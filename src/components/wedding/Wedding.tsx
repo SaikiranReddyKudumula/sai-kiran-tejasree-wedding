@@ -121,9 +121,16 @@ function Events() {
         <p className="event-couple">
           {wedding.groom.short} &amp; {wedding.bride.short}
         </p>
+        <div className="event-tabs" aria-label="Choose an event">
+          {events.map((item, i) => (
+            <button key={item.id} aria-pressed={i === index} onClick={() => setIndex(i)}>
+              {item.name}
+            </button>
+          ))}
+        </div>
         <div className="event-layout">
           <div className="event-photo">
-            <img src={art.event.url} alt="Illustrated wedding celebration" loading="lazy" />
+            <img src={event.image} alt={`${event.name} illustration`} loading="lazy" />
             <div className="event-navigation">
               <button
                 aria-label="Previous event"
@@ -153,24 +160,23 @@ function Events() {
                 <CalendarDays />
                 {event.date}
               </p>
-              <p>
-                <Clock3 />
-                {event.time}
-              </p>
+              {event.time && (
+                <p>
+                  <Clock3 />
+                  {event.time}
+                </p>
+              )}
               <p>
                 <MapPin />
                 {event.venue}
               </p>
             </div>
             <p className="event-telugu font-telugu">{event.telugu}</p>
-            <a
-              className="location-button"
-              href={wedding.venue.mapsUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              View Location
-            </a>
+            {event.mapsUrl && (
+              <a className="location-button" href={event.mapsUrl} target="_blank" rel="noreferrer">
+                View Location
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -420,6 +426,17 @@ function Finale() {
             <span>Open in Google Maps</span>
             <ArrowRight />
           </a>
+        </div>
+        <div className="livestream-block">
+          <a
+            className="livestream-button"
+            href={wedding.livestream.url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Play fill="currentColor" size={18} /> YouTube Live <ArrowRight size={18} />
+          </a>
+          {wedding.livestream.isPlaceholder && <p>Preview link · Wedding livestream coming soon</p>}
         </div>
         <p className="finale-names">
           {wedding.groom.short} &amp; {wedding.bride.short}

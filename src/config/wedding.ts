@@ -8,6 +8,8 @@ export type WeddingEvent = {
   time?: string;
   venue?: string;
   confirmed: boolean;
+  image: string;
+  mapsUrl?: string;
 };
 
 export const wedding = {
@@ -21,8 +23,7 @@ export const wedding = {
   venue: {
     name: "SS Convention Hall",
     city: "Mylavaram, Andhra Pradesh",
-    mapsUrl:
-      "https://maps.app.goo.gl/kZayRBLBM6bFvHmx8",
+    mapsUrl: "https://maps.app.goo.gl/kZayRBLBM6bFvHmx8",
   },
   groomFamily: {
     english: "Sri Kudumula Krishna Reddy & Smt. Venkata Ramana",
@@ -55,6 +56,8 @@ export const wedding = {
   photoPlaceholder: "Our memories, coming soon",
   photoPlaceholderTelugu: "మా మధుర జ్ఞాపకాలు",
   instagramUrl: "",
+  // Replace with the wedding livestream URL and set isPlaceholder to false.
+  livestream: { url: "https://www.youtube.com/live", isPlaceholder: true },
   story:
     "Two hearts, one beautiful journey, and a lifetime of togetherness. Through every smile and every moment shared, our journey has brought us to this beautiful beginning. As we take the sacred vows of forever, we carry dreams of a wonderful future and the blessings of our families. With hearts full of love and gratitude, we invite you to celebrate the beginning of our forever.",
   hashtag: "#SaiKiranWedsTejaSree",
@@ -62,27 +65,44 @@ export const wedding = {
   photos: [] as string[], // Add paths such as "/photos/couple-01.jpg"; store files in public/photos/.
   events: [
     {
+      id: "groom-haldi",
+      name: "Groom’s Haldi",
+      telugu: "పెళ్లికొడుకు పసుపు వేడుక",
+      date: "December 11, 2026",
+      venue: "Mylavaram",
+      image: artwork.haldi.url,
+      confirmed: true,
+    },
+    {
+      id: "bride-haldi",
+      name: "Bride’s Haldi",
+      telugu: "పెళ్లికూతురు పసుపు వేడుక",
+      date: "December 11, 2026",
+      venue: "Hyderabad",
+      image: artwork.haldi.url,
+      confirmed: true,
+    },
+    {
       id: "muhurtham",
       name: "Wedding Ceremony",
-      telugu: "ముహూర్తం",
+      telugu: "సుముహూర్తం",
       date: "December 12, 2026",
       time: "7:29 PM IST",
       venue: "SS Convention Hall, Mylavaram",
+      image: artwork.ceremony.url,
+      mapsUrl: "https://maps.app.goo.gl/kZayRBLBM6bFvHmx8",
       confirmed: true,
     },
     {
       id: "dinner",
       name: "Wedding Dinner",
-      telugu: "విందు",
+      telugu: "వివాహ విందు",
       date: "December 12, 2026",
-      time: "7:00 PM IST",
-      venue: "SS Convention Hall",
+      time: "7:00 PM IST onwards",
+      venue: "SS Convention Hall, Mylavaram",
+      image: artwork.dinner.url,
+      mapsUrl: "https://maps.app.goo.gl/kZayRBLBM6bFvHmx8",
       confirmed: true,
     },
-    { id: "haldi", name: "Haldi", telugu: "పసుపు", confirmed: false },
-    { id: "pellikuthuru", name: "Pellikuthuru", telugu: "పెళ్లికూతురు", confirmed: false },
-    { id: "pellikoduku", name: "Pellikoduku", telugu: "పెళ్లికొడుకు", confirmed: false },
-    { id: "mehendi", name: "Mehendi", telugu: "మెహందీ", confirmed: false },
-    { id: "reception", name: "Reception", telugu: "రిసెప్షన్", confirmed: false },
   ] as WeddingEvent[],
 };
