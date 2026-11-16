@@ -508,17 +508,7 @@ a:focus-visible {
   color: var(--invitation-white);
   font-size: 1.6cqw;
 }
-.couple-scene {
-  height: 220svh;
-  position: relative;
-  background: oklch(0.77 0.09 240);
-}
-.couple-sticky {
-  height: 100svh;
-  position: sticky;
-  top: 0;
-  overflow: hidden;
-}
+
 .couple-background {
   position: absolute;
   inset: 0;
@@ -526,14 +516,7 @@ a:focus-visible {
   height: 100%;
   object-fit: cover;
 }
-.couple-art-box {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  height: calc(min(109.6svh, 178.63vw) / 1.5);
-  aspect-ratio: 1872/3344;
-  transform: translateX(-50%);
-}
+
 .couple-temple,
 .couple-cutout {
   position: absolute;
@@ -1004,10 +987,7 @@ a:focus-visible {
   *::after {
     scroll-behavior: auto !important;
   }
-  .hero-scene,
-  .couple-scene {
-    height: 100svh;
-  }
+  .hero-scene { height: 100svh; }
   .hero-temple {
     bottom: -45%;
   }
@@ -1023,16 +1003,7 @@ a:focus-visible {
   overflow-wrap: anywhere;
 }
 /* A shorter, width-filling wedding tableau keeps the temple visible on entry. */
-.couple-scene {
-  height: 150svh;
-}
-.couple-sticky {
-  height: min(100svh, 163vw);
-}
-.couple-art-box {
-  height: auto;
-  width: calc(100vw / 1.5);
-}
+
 .photo-placeholder {
   display: flex;
   flex-direction: column;
@@ -1091,15 +1062,8 @@ a:focus-visible {
     gap: 12px;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .couple-scene {
-    height: min(100svh, 163vw);
-  }
-}
 /* The shared temple/couple canvas starts at the full viewport width. */
-.couple-art-box {
-  width: 100%;
-}
+
 .hero-names h1 {
   font-family: "Instrument Serif", Georgia, serif;
   font-weight: 400;
@@ -1186,9 +1150,7 @@ a:focus-visible {
   }
 }
 /* Keep the ground flush with the following panel throughout the scroll zoom. */
-.couple-art-box {
-  bottom: -1px;
-}
+
 .story-gallery {
   top: 39%;
 }
@@ -1230,5 +1192,44 @@ a:focus-visible {
   }
   .finale-names {
     margin-top: 7cqw;
+  }
+}
+
+/* One viewport-sized sticky stage keeps its release aligned with end/end progress.
+   The original transparent art is 1872 × 3344; its tower begins 293px down. */
+.couple-scene {
+  --scene-height: 100svh;
+  position: relative;
+  height: calc(var(--scene-height) + 50svh);
+  background: var(--invitation-ink);
+}
+.couple-sticky {
+  position: sticky;
+  top: 0;
+  height: var(--scene-height);
+  overflow: hidden;
+  isolation: isolate;
+}
+.couple-sticky::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 22%;
+  background: linear-gradient(to bottom, transparent, oklch(0.7 0.06 75) 80%);
+  z-index: 0;
+  pointer-events: none;
+}
+.couple-art-box {
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  width: min(100%, 61.35svh);
+  aspect-ratio: 1872 / 3344;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .couple-scene {
+    height: var(--scene-height);
   }
 }
